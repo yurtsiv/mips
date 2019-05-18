@@ -4,7 +4,7 @@
 welcome_msg: .asciiz "\nE - encrypt, D - decrypt: "
 key_msg: .asciiz "\nEncryption key: "
 enter_msg: .asciiz "\nMessage: "
-result_msg: .asciiz "\n Result: "
+result_msg: .asciiz "\nResult: "
 key_buffer: .space 8
 msg_buffer: .space 50
 result_buffer: .space 50
@@ -50,8 +50,9 @@ start:
 
   encrypt:
     la $v0, msg_buffer # message start address
-    # uppercase_eng_str($v0)
-    remove_char_at($v0, 1)
+    uppercase_eng_str($v0)
+    remove_char($v0, ",")
+    remove_char($v0, " ")
     j exit    
 
     # do_encrypt:
