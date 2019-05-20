@@ -1,5 +1,3 @@
-.include "macros.asm"
-
 .data
   welcome_msg: .asciiz "\nE - encrypt, D - decrypt: "
   key_msg: .asciiz "\nEncryption key: "
@@ -74,7 +72,7 @@ remove_redundant_chars:
       move $a0, $t4             # string address
       move $a1, $t3             # char index
       jal remove_char_at
-      j r_r_c_iter                # jump to the next iteration without incrementing counter
+      j r_r_c_iter              # jump to the next iteration without incrementing counter
 
     r_r_c_iter_end:
      add $t3, $t3, 1
@@ -91,9 +89,9 @@ program_start:
   li $v0, 12
   syscall
 
-  move $s7, $v0              # store selected option in $s7
-  beq $v0, 0x45, read_key    # E char
-  beq $v0, 0x44, read_key    # D char
+  move $s7, $v0                 # store selected option in $s7
+  beq $v0, 0x45, read_key       # E char
+  beq $v0, 0x44, read_key       # D char
   j program_start
 
   # read an encryption key
@@ -134,12 +132,12 @@ program_start:
   # FUNC: calculate the offeset of specific key char stored in $s1
   calc_key_char_offset:
     blt $s1, 0x40, handle_number_key_char   # handle number key char differently
-    add $s2, $s1, -0x41                     # key char offset
+    add $s2, $s1, -0x41                     # key char offset for A-Z
     jr $ra
     handle_number_key_char:
-    add $s2, $s1, -0x31
+    add $s2, $s1, -0x31                     # key char offset for 0-9
     jr $ra
-  
+
   # ENCRYPTION
   encrypt:
     add $t2, $a0, $t0             # calc current message char address
@@ -162,7 +160,7 @@ program_start:
 
     # encrypt number
     encrypt_number:
-      
+
     next_encrypt_iter:
       add $t0, $t0, 1
       add $t1, $t1, 1
@@ -195,16 +193,16 @@ program_start:
       j next_decrypt_iter
 
       decrypt_number:
-
+ 
       next_decrypt_iter:
 	add $t0, $t0, 1
 	add $t1, $t1, 1
  	lb $t4, 1($t3)
  	beq $t4, $zero, d_key_end
  	j decrypt
-
+ 	# reset key iterator
         d_key_end:
-          li $t1, 0 # reset key iterator
+          li $t1, 0
           j decrypt
 
   program_exit:
