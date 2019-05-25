@@ -84,6 +84,7 @@ program_start:
 
     next_iter:
       sub $s7, $s7, 1
+      jal push_instruction_to_stack
       j read_instruction
 
      wrong_inst:
@@ -93,5 +94,5 @@ program_start:
        j read_instruction
  
   program_end:
-    li $v0, 10
+    li $v0, 10 # end of the program
     syscall
