@@ -9,7 +9,7 @@ check_match:
   c_i_m_next_iter:
     add $t3, $a0, $t1  # string char address
     add $t4, $a1, $t2  # pattern char address
-    
+
     lb $t5, 0($t3)     # string char
     lb $t6, 0($t4)     # pattern char
     lb $t7, 1($t3)     # string next char
@@ -77,6 +77,7 @@ check_match:
       bne $s0, 1, c_i_m_fail_end
       
       beq $t7, $zero, end_of_immediate_val
+      beq $t7, 0xa, end_of_one_word
       # do not increment pattern iterator to check next digit
       add $t1, $t1, 1
       j c_i_m_next_iter
@@ -95,6 +96,7 @@ check_match:
       bne $s0, 1, c_i_m_fail_end
       
       beq $t7, $zero, end_of_one_word
+      beq $t7, 0xa, end_of_one_word
       # do not increment pattern iterator to check next char
       add $t1, $t1, 1
       j c_i_m_next_iter

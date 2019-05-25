@@ -21,7 +21,7 @@ program_start:
   li $v0, 4
   la $a0, help_msg
   syscall
-  
+
   read_num_of_instructions:
     li $v0, 4
     la $a0, number_of_inst_msg
@@ -50,7 +50,32 @@ program_start:
     
     li $v0, 0
     
+    # check instruction validity
     la $a1, add_inst
+    jal check_match
+    beq $v0, 1, next_iter
+
+    la $a1, addi_inst
+    jal check_match
+    beq $v0, 1, next_iter
+    
+    la $a1, j_inst
+    jal check_match
+    beq $v0, 1, next_iter
+    
+    la $a1, noop_inst
+    jal check_match
+    beq $v0, 1, next_iter
+    
+    la $a1, mult_inst
+    jal check_match
+    beq $v0, 1, next_iter
+    
+    la $a1, jr_inst
+    jal check_match
+    beq $v0, 1, next_iter
+    
+    la $a1, jal_inst
     jal check_match
     beq $v0, 1, next_iter
 
