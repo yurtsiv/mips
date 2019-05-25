@@ -90,7 +90,7 @@ check_match:
 
     check_one_word:
       # allow only a-z
-      sgt $s0, $t5, 0x61
+      sgt $s0, $t5, 0x60
       slti $s1, $t5, 0x7b
       and $s0, $s0, $s1
       bne $s0, 1, c_i_m_fail_end

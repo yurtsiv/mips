@@ -51,6 +51,10 @@ program_start:
     li $v0, 0
     
     # check instruction validity
+    la $a1, j_inst
+    jal check_match
+    beq $v0, 1, next_iter
+
     la $a1, add_inst
     jal check_match
     beq $v0, 1, next_iter
@@ -59,9 +63,6 @@ program_start:
     jal check_match
     beq $v0, 1, next_iter
     
-    la $a1, j_inst
-    jal check_match
-    beq $v0, 1, next_iter
     
     la $a1, noop_inst
     jal check_match
