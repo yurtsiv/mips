@@ -83,7 +83,7 @@ program_start:
     j wrong_inst
 
     next_iter:
-      add $s7, $s7, -1
+      sub $s7, $s7, 1
       j read_instruction
 
      wrong_inst:
@@ -93,6 +93,5 @@ program_start:
        j read_instruction
  
   program_end:
-  
-  
-  
+    li $v0, 10
+    syscall
