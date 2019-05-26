@@ -4,6 +4,7 @@ help_msg: .asciiz "\nAvailable instructions:\nADD $1, $2, $3\nADDI $1, $2, value
 enter_inst_msg: .asciiz "\nEnter your instruction: "
 wrong_inst_msg: .asciiz "\nInstruction you've enterd is incorrect" 
 number_of_inst_msg: .asciiz "\nNumber of instructions (1-5): "
+stack_msg: .asciiz "\nStack of instructions and their args: \n"
 
 # instrcutions patters
 add_inst: .asciiz "ADD $*, $*, $*"
@@ -70,6 +71,7 @@ program_start:
     beq $v0, 1, next_iter
     
     la $a1, mult_inst
+    
     jal check_match
     beq $v0, 1, next_iter
     
@@ -95,7 +97,11 @@ program_start:
        j read_instruction
  
   program_end:
+    la $a0, stack_msg
+    li $v0, 4
+    syscall
+
     move $a0, $s6
     jal print_instructions_from_stack
-    li $v0, 10                         # program exit
+    li $v0, 10
     syscall
