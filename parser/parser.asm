@@ -18,6 +18,7 @@ instruction_buffer: .space 30
 
 .text
 program_start:
+  move $s6, $sp     # store stack bottom
   li $v0, 4
   la $a0, help_msg
   syscall
@@ -94,5 +95,7 @@ program_start:
        j read_instruction
  
   program_end:
-    li $v0, 10 # end of the program
+    move $a0, $s6
+    jal print_instructions_from_stack
+    li $v0, 10                         # program exit
     syscall

@@ -111,7 +111,7 @@ check_match:
       add $t1, $t1, 1
       add $t2, $t2, 1
       j c_i_m_next_iter
-    
+
   c_i_m_succ_end:
     li $v0, 1
     jr $ra
