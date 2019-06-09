@@ -5,6 +5,7 @@
 # args: $a0 - game field address
 ai_turn:
   li $t0, 2 # computer's sign
+  move $t7, $a0
 
   # win first row
   lb $t1, ($a0)
@@ -174,14 +175,12 @@ ai_turn:
     j a_t_end
 
   a_t_play_random:
-    move $t1, $a0 # store game field address
-    
     li $a0, 1
     la $a1, 8
     li $v0, 42
     syscall
-    
-    add $t2, $t1, $a0
+
+    add $t2, $t7, $a0
     lb $t3, ($t2)
     bne $t3, 0, a_t_play_random      
     sb $t0, ($t2)
@@ -189,3 +188,4 @@ ai_turn:
 
   a_t_end:
     jr $ra
+

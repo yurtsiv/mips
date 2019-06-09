@@ -4,10 +4,20 @@
 
 # FUNC - checks if someone has won the game
 # args: $a0 - game field buffer address
-# result: $v0 - 0 (computer won) | 1 (user won) | 2 (draw) | 3 (not finished yet)
+# result: $v0 - 0 (computer won) | 1 (user won) | 2 (tie) | 3 (not finished yet)
 check_for_winner:
   move $t4, $ra # store return address
 
+  li $t0, 0 # iterator
+  c_f_w_next_iter:
+    beq $t0, 9, c_f_w_tie
+    add $t1, $a0, $t0
+    lb $t1, ($t1)
+    beq $t1, 0, c_f_w_continue_checking
+    add $t0, $t0, 1
+    j c_f_w_next_iter
+
+  c_f_w_continue_checking:
   # check first row
   lb $t0, 0($a0)
   lb $t1, 1($a0)
@@ -67,12 +77,17 @@ check_for_winner:
     seq $t0, $t0, $t1
     seq $t1, $t1, $t2
     and $t0, $t0, $t1
-    beq $t0, 1, c_f_w_found_winner
+    beq $t0, 1, c_f_w_win
     c_f_w_not_filled: jr $ra
 
-  c_f_w_found_winner:
-    seq $v0, $t3, 1 # if winning charachter is user's
+  c_f_w_win:
+    seq $v0, $t2, 1 # if winning charachter is user's
     jr $t4
+
+  c_f_w_tie:
+    li $v0, 2
+    jr $t4
+    
 
 # FUNC - prints current field state
 # args: $a0 - field address, $a1 - users's char, $a2 - computer's char

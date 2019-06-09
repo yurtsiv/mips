@@ -13,6 +13,7 @@ game_field_buffer: .space 9
 # $s1 - user's char (o or x)
 # $s2 - computer's char (o or x)
 # $s3 - game field buffer address
+# $s4 - round result
 
 .text
 la $s3, game_field_buffer
@@ -53,9 +54,6 @@ game_start:
       move $a2, $s2
       jal print_field
       move $a0, $s3
-      jal check_for_winner
-      beq $v0, 3, user_turn  # not finsihed yet
-      j round_end
 
       user_turn:
         print("\nYour turn (1-9): ")
@@ -65,16 +63,49 @@ game_start:
         add $t0, $s3, $v0
         li $t1, 1
         sb $t1, -1($t0)
+
         move $a0, $s3
-        jal ai_turn
-        j next_turn
+        jal check_for_winner
+        move $s4, $v0
+        beq $s4, 3, continue_turn  # not finsihed yet
+        move $a0, $s3
+        move $a1, $s1
+        move $a2, $s2
+        jal print_field
+        j round_end
+ 
+        continue_turn:
+          move $a0, $s3
+          jal ai_turn
+          
+          move $a0, $s3
+          jal check_for_winner
+          move $s4, $v0
+          beq $s4, 3, next_turn # not finished yet
+          move $a0, $s3
+          move $a1, $s1
+          move $a2, $s2
+          jal print_field
+          j round_end
 
     round_end:
-      print ("Round finished")
+      print ("\nRound finished")
       add $s0, $s0, -1
+      beq $s4, 0, computer_won
+      beq $s4, 1, user_won
+
+      print ("\nTie")
       j next_round
+      
+      user_won:
+       print ("\nYou won")
+       j next_round
+
+      computer_won:
+       print ("\nComputer won")
+       j next_round
 
 game_over:
-  print ("\nGame over")
+  print ("\nGame finished")
   li $v0, 10
   syscall
