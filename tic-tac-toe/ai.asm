@@ -6,70 +6,6 @@
 ai_turn:
   li $t0, 2 # computer's sign
 
-  # deny first row
-  lb $t1, ($a0)
-  lb $t2, 1($a0)
-  lb $t3, 2($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_1)
-  match_three_temp_regs (1, 0, 1, a_t_play_2)
-  match_three_temp_regs (1, 1, 0, a_t_play_3)
-
-  # deny second row
-  lb $t1, 3($a0)
-  lb $t2, 4($a0)
-  lb $t3, 5($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_4)
-  match_three_temp_regs (1, 0, 1, a_t_play_5)
-  match_three_temp_regs (1, 1, 0, a_t_play_6)
-
-  # deny third row
-  lb $t1, 6($a0)
-  lb $t2, 7($a0)
-  lb $t3, 8($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_7)
-  match_three_temp_regs (1, 0, 1, a_t_play_8)
-  match_three_temp_regs (1, 1, 0, a_t_play_9)
-
-  # deny first column
-  lb $t1, 0($a0)
-  lb $t2, 3($a0)
-  lb $t3, 6($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_1)
-  match_three_temp_regs (1, 0, 1, a_t_play_4)
-  match_three_temp_regs (1, 1, 0, a_t_play_7)
-
-  # deny second column
-  lb $t1, 1($a0)
-  lb $t2, 4($a0)
-  lb $t3, 7($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_2)
-  match_three_temp_regs (1, 0, 1, a_t_play_5)
-  match_three_temp_regs (1, 1, 0, a_t_play_8)
-
-  # deny third column
-  lb $t1, 2($a0)
-  lb $t2, 5($a0)
-  lb $t3, 8($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_3)
-  match_three_temp_regs (1, 0, 1, a_t_play_6)
-  match_three_temp_regs (1, 1, 0, a_t_play_9)
-
-  # deny main diagonal
-  lb $t1, 0($a0)
-  lb $t2, 4($a0)
-  lb $t3, 8($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_1)
-  match_three_temp_regs (1, 0, 1, a_t_play_5)
-  match_three_temp_regs (1, 1, 0, a_t_play_9)
-
-  # deny second diagonal
-  lb $t1, 2($a0)
-  lb $t2, 4($a0)
-  lb $t3, 6($a0)
-  match_three_temp_regs (0, 1, 1, a_t_play_3)
-  match_three_temp_regs (1, 0, 1, a_t_play_5)
-  match_three_temp_regs (1, 1, 0, a_t_play_7)
-  
   # win first row
   lb $t1, ($a0)
   lb $t2, 1($a0)
@@ -134,7 +70,72 @@ ai_turn:
   match_three_temp_regs (2, 0, 2, a_t_play_5)
   match_three_temp_regs (2, 2, 0, a_t_play_7)
 
-  j a_t_play_first_free
+  # deny first row
+  lb $t1, ($a0)
+  lb $t2, 1($a0)
+  lb $t3, 2($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_1)
+  match_three_temp_regs (1, 0, 1, a_t_play_2)
+  match_three_temp_regs (1, 1, 0, a_t_play_3)
+
+  # deny second row
+  lb $t1, 3($a0)
+  lb $t2, 4($a0)
+  lb $t3, 5($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_4)
+  match_three_temp_regs (1, 0, 1, a_t_play_5)
+  match_three_temp_regs (1, 1, 0, a_t_play_6)
+
+  # deny third row
+  lb $t1, 6($a0)
+  lb $t2, 7($a0)
+  lb $t3, 8($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_7)
+  match_three_temp_regs (1, 0, 1, a_t_play_8)
+  match_three_temp_regs (1, 1, 0, a_t_play_9)
+
+  # deny first column
+  lb $t1, 0($a0)
+  lb $t2, 3($a0)
+  lb $t3, 6($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_1)
+  match_three_temp_regs (1, 0, 1, a_t_play_4)
+  match_three_temp_regs (1, 1, 0, a_t_play_7)
+
+  # deny second column
+  lb $t1, 1($a0)
+  lb $t2, 4($a0)
+  lb $t3, 7($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_2)
+  match_three_temp_regs (1, 0, 1, a_t_play_5)
+  match_three_temp_regs (1, 1, 0, a_t_play_8)
+
+  # deny third column
+  lb $t1, 2($a0)
+  lb $t2, 5($a0)
+  lb $t3, 8($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_3)
+  match_three_temp_regs (1, 0, 1, a_t_play_6)
+  match_three_temp_regs (1, 1, 0, a_t_play_9)
+
+  # deny main diagonal
+  lb $t1, 0($a0)
+  lb $t2, 4($a0)
+  lb $t3, 8($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_1)
+  match_three_temp_regs (1, 0, 1, a_t_play_5)
+  match_three_temp_regs (1, 1, 0, a_t_play_9)
+
+  # deny second diagonal
+  lb $t1, 2($a0)
+  lb $t2, 4($a0)
+  lb $t3, 6($a0)
+  match_three_temp_regs (0, 1, 1, a_t_play_3)
+  match_three_temp_regs (1, 0, 1, a_t_play_5)
+  match_three_temp_regs (1, 1, 0, a_t_play_7)
+
+
+  j a_t_play_random
 
   a_t_play_1:
     sb $t0, ($a0)
@@ -172,18 +173,19 @@ ai_turn:
     sb $t0, 8($a0)
     j a_t_end
 
-  a_t_play_first_free:
-    li $t5, 0 # iterator
-    a_t_next_iter:
-      add $t1, $a0, $t5
-      lb $t2, ($t1)
-      beq $t2, 0, a_t_play_free
-      add $t5, $t5, 1
-      j a_t_next_iter
-      
-      a_t_play_free:
-        sb $t0, ($t1)
-        j a_t_end
+  a_t_play_random:
+    move $t1, $a0 # store game field address
+    
+    li $a0, 1
+    la $a1, 8
+    li $v0, 42
+    syscall
+    
+    add $t2, $t1, $a0
+    lb $t3, ($t2)
+    bne $t3, 0, a_t_play_random      
+    sb $t0, ($t2)
+    j a_t_end
 
   a_t_end:
     jr $ra

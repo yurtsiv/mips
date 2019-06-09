@@ -62,8 +62,9 @@ game_start:
         li $v0, 5
         syscall
         validate_turn ($v0, $s3, user_turn)
+        add $t0, $s3, $v0
         li $t1, 1
-        sb $t1, -1($t0)  # $t0 is calculated in the macros above
+        sb $t1, -1($t0)
         move $a0, $s3
         jal ai_turn
         j next_turn

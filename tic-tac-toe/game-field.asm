@@ -33,15 +33,15 @@ check_for_winner:
   jal c_f_w_check_if_filled
   
   # check second column
-  lb $t0, 0($a0)
-  lb $t1, 3($a0)
-  lb $t2, 6($a0)
+  lb $t0, 1($a0)
+  lb $t1, 4($a0)
+  lb $t2, 7($a0)
   jal c_f_w_check_if_filled
   
   # check third column
-  lb $t0, 0($a0)
-  lb $t1, 3($a0)
-  lb $t2, 6($a0)
+  lb $t0, 2($a0)
+  lb $t1, 5($a0)
+  lb $t2, 8($a0)
   jal c_f_w_check_if_filled
   
   # check main diagonal
@@ -56,8 +56,8 @@ check_for_winner:
   lb $t2, 6($a0)
   jal c_f_w_check_if_filled
 
-  # no winner
-  li $v0, 2
+  # not finished yet
+  li $v0, 3
   jr $t4
 
   c_f_w_check_if_filled:
