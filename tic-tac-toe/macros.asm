@@ -15,3 +15,13 @@
   
   continue:
 .end_macro
+
+.macro print(%msg)
+  .data
+  msg: .asciiz %msg
+  
+  .text
+  la $a0, msg
+  li $v0, 4
+  syscall
+.end_macro
