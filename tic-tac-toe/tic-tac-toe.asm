@@ -54,7 +54,7 @@ game_start:
       jal print_field
       move $a0, $s3
       jal check_for_winner
-      beq $v0, 2, user_turn  # no winner yet
+      beq $v0, 3, user_turn  # not finsihed yet
       j round_end
 
       user_turn:
@@ -63,7 +63,7 @@ game_start:
         syscall
         validate_turn ($v0, $s3, user_turn)
         li $t1, 1
-        sb $t1, -1($t0) # $t0 is calculated in the macros above
+        sb $t1, -1($t0)  # $t0 is calculated in the macros above
         move $a0, $s3
         jal ai_turn
         j next_turn

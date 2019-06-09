@@ -32,3 +32,13 @@
 
   continue:
 .end_macro
+
+# if $t1, $t2, $t3 are equal to %val1, $val2, $val3 go to %label
+.macro match_three_temp_regs(%val1, %val2, %val3, %label)
+  seq $t4, $t1, %val1
+  seq $t5, $t2, %val2
+  seq $t6, $t3, %val3
+  and $t4, $t4, $t5
+  and $t4, $t4, $t6
+  beq $t4, 1, %label
+.end_macro

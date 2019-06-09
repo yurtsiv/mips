@@ -4,7 +4,7 @@
 
 # FUNC - checks if someone has won the game
 # args: $a0 - game field buffer address
-# result: $v0 - 0 (computer won) | 1 (user won) | 2 (no winner yet)
+# result: $v0 - 0 (computer won) | 1 (user won) | 2 (draw) | 3 (not finished yet)
 check_for_winner:
   move $t4, $ra # store return address
 
